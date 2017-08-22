@@ -151,6 +151,68 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-react源码" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/22/react源码/">react源码</a>
+    </h1>
+  
+
+        
+        <a href="/2017/08/22/react源码/" class="archive-article-date">
+  	<time datetime="2017-08-22T11:22:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div></pre></td><td class="code"><pre><div class="line">var REACT_ELEMENT_TYPE = require(&apos;ReactElementSymbol&apos;);</div><div class="line"></div><div class="line">var RESERVED_PROPS = &#123;</div><div class="line">  key: true,</div><div class="line">  ref: true,</div><div class="line">  __self: true,</div><div class="line">  __source: true,</div><div class="line">&#125;;</div><div class="line"></div><div class="line">var specialPropKeyWarningShown, specialPropRefWarningShown;</div><div class="line"></div><div class="line">var ReactElement = function(type, key, ref, self, source, owner, props) &#123;</div><div class="line">  var element = &#123;</div><div class="line">    $$typeof: REACT_ELEMENT_TYPE,</div><div class="line">    type: type,</div><div class="line">    key: key,</div><div class="line">    ref: ref,</div><div class="line">    props: props,</div><div class="line">    _owner: owner,</div><div class="line">  &#125;;</div><div class="line"></div><div class="line">  return element;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">ReactElement.createElement = function(type, config, children) &#123;</div><div class="line">  var propName;</div><div class="line"></div><div class="line">  // Reserved names are extracted</div><div class="line">  var props = &#123;&#125;;</div><div class="line"></div><div class="line">  var key = null;</div><div class="line">  var ref = null;</div><div class="line">  var self = null;</div><div class="line">  var source = null;</div><div class="line"></div><div class="line">  if (config != null) &#123;</div><div class="line">    ref = config.ref;</div><div class="line">    key = &apos;&apos; + config.key;</div><div class="line"></div><div class="line">    self = config.__self === undefined ? null : config.__self;</div><div class="line">    source = config.__source === undefined ? null : config.__source;</div><div class="line">    // Remaining properties are added to a new props object</div><div class="line">    for (propName in config) &#123;</div><div class="line">      if (</div><div class="line">        hasOwnProperty.call(config, propName) &amp;&amp;</div><div class="line">        !RESERVED_PROPS.hasOwnProperty(propName)</div><div class="line">      ) &#123;</div><div class="line">        props[propName] = config[propName];</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  var childrenLength = arguments.length - 2;</div><div class="line">  if (childrenLength === 1) &#123;</div><div class="line">    props.children = children;</div><div class="line">  &#125; else if (childrenLength &gt; 1) &#123;</div><div class="line">    var childArray = Array(childrenLength);</div><div class="line">    for (var i = 0; i &lt; childrenLength; i++) &#123;</div><div class="line">      childArray[i] = arguments[i + 2];</div><div class="line">    &#125;</div><div class="line">    props.children = childArray;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  // Resolve default props</div><div class="line">  if (type &amp;&amp; type.defaultProps) &#123;</div><div class="line">    var defaultProps = type.defaultProps;</div><div class="line">    for (propName in defaultProps) &#123;</div><div class="line">      if (props[propName] === undefined) &#123;</div><div class="line">        props[propName] = defaultProps[propName];</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  return ReactElement(</div><div class="line">    type,</div><div class="line">    key,</div><div class="line">    ref,</div><div class="line">    self, // TODO: NULL</div><div class="line">    source, // TODO: NULL</div><div class="line">    ReactCurrentOwner.current,</div><div class="line">    props,</div><div class="line">  );</div><div class="line">&#125;;</div><div class="line"></div><div class="line">ReactElement.createFactory = function(type) &#123;</div><div class="line">  var factory = ReactElement.createElement.bind(null, type);</div><div class="line">  factory.type = type;</div><div class="line">  return factory;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">ReactElement.cloneAndReplaceKey = function(oldElement, newKey) &#123;</div><div class="line">  var newElement = ReactElement(</div><div class="line">    oldElement.type,</div><div class="line">    newKey,</div><div class="line">    oldElement.ref,</div><div class="line">    oldElement._self,</div><div class="line">    oldElement._source,</div><div class="line">    oldElement._owner,</div><div class="line">    oldElement.props,</div><div class="line">  );</div><div class="line"></div><div class="line">  return newElement;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">ReactElement.cloneElement</div><div class="line"></div><div class="line">ReactElement.isValidElement</div><div class="line"></div><div class="line">module.exports = ReactElement;</div></pre></td></tr></table></figure>
+<p>可见element只是一个属性$$typeof为特定址的object<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">object&#123;$$typeof, type, key, ref, props, _owner&#125;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/08/22/react源码/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-spa" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -174,6 +236,8 @@
         <h3 id="静态程序分析"><a href="#静态程序分析" class="headerlink" title="静态程序分析"></a>静态程序分析</h3><blockquote>
 <p>静态程序分析是指在不执行程序的时候进行代码的分析</p>
 </blockquote>
+<p>js是动态编程语言</p>
+<h3 id="js"><a href="#js" class="headerlink" title="js"></a>js</h3><p>js是动态编程语言\n<br>fdfdffdfsf</p>
 
       
     </div>

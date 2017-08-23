@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Hipumpkin">
 <meta property="og:description" content="初始化组件入口，调用位置ReactMount。12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364var ReactCompositeComponentWrapper = function(element) &amp;#1">
 <meta property="og:image" content="https://ws2.sinaimg.cn/large/006tKfTcly1fisqxkjoqmj31hw0q0tbx.jpg">
-<meta property="og:updated_time" content="2017-08-22T12:25:51.000Z">
+<meta property="og:updated_time" content="2017-08-23T03:24:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="react源码-instantiateReactComponent">
 <meta name="twitter:description" content="初始化组件入口，调用位置ReactMount。12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364var ReactCompositeComponentWrapper = function(element) &amp;#1">
@@ -188,13 +188,20 @@
 <li>_commentNodes</li>
 <li>_hostContainerInfo // ReactDOMEmptyComponent实例有的属性<br>未完待续</li>
 </ul>
-<p>根据node类型来区分组件入口<br><img src="https://ws2.sinaimg.cn/large/006tKfTcly1fisqxkjoqmj31hw0q0tbx.jpg" alt=""></p>
+<p>根据node类型来区分组件入口<br><img src="https://ws2.sinaimg.cn/large/006tKfTcly1fisqxkjoqmj31hw0q0tbx.jpg" alt=""><br>其中nodeType有三种,在ReactNodeTypes里定义，ReactNodeTypes.getType(node)可以获取</p>
 <ul>
-<li>ReactDOMEmptyComponent </li>
+<li>HOST // ReactHostComponent</li>
+<li>COMPOSITE // ReactCompositeComponent</li>
+<li>EMPTY // ReactEmptyComponent</li>
+</ul>
+<p>web端这几种Component的实现分别是：</p>
+<ul>
 <li>ReactDOMComponent</li>
 <li>ReactCompositeComponent</li>
-<li>ReactDOMTextComponent<br>这几个构造函数里都有<code>mountComponent</code>方法，是用来讲虚拟dom对象转化为dom对象的</li>
+<li>ReactDOMEmptyComponent<br>外加一种特殊处理的<code>TEXT</code>类型：</li>
+<li>ReactDOMTextComponent // createElement创建的字符串，拥有唯一标识，否则就是单纯的字符串</li>
 </ul>
+<p>这几个构造函数里都有<code>mountComponent</code>方法(在ReactMount里调用)，是用来讲虚拟dom对象转化为dom对象的</p>
 <p><code>ReactInjection</code>是用来根据不同的host初始化不同的component的形式的,比如DOM和native就对应两种不同的injection</p>
 
       
@@ -265,6 +272,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2017/08/23/react源码-一些概念/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          react源码-一些概念
+        
+      </div>
+    </a>
   
   
     <a href="/2017/08/22/react源码-ReactElement/" id="article-nav-older" class="article-nav-link-wrap">

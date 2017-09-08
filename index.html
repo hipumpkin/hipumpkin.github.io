@@ -151,6 +151,69 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-react源码-setState是异步的，when？" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/08/react源码-setState是异步的，when？/">react源码--setState是异步的，when？</a>
+    </h1>
+  
+
+        
+        <a href="/2017/09/08/react源码-setState是异步的，when？/" class="archive-article-date">
+  	<time datetime="2017-09-08T03:34:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>先看一段代码from<code>深入React技术栈P167</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">class App extends React.Component &#123;</div><div class="line">  constructor(props) &#123;</div><div class="line">    super(props);</div><div class="line">    this.state = &#123;</div><div class="line">      val: 0,</div><div class="line">    &#125;;</div><div class="line">  &#125;</div><div class="line">  componentDidMount() &#123;</div><div class="line">    this.setState(&#123; val: this.state.val + 1 &#125;);</div><div class="line">    console.log(this.state.val); // 0</div><div class="line">    this.setState(&#123; val: this.state.val + 1 &#125;);</div><div class="line">    console.log(this.state.val); // 0</div><div class="line"></div><div class="line">    setTimeout(() =&gt; &#123;</div><div class="line">      this.setState(&#123; val: this.state.val + 1 &#125;);</div><div class="line">      console.log(this.state.val); // 2</div><div class="line">      this.setState(&#123; val: this.state.val + 1 &#125;);</div><div class="line">      console.log(this.state.val); // 3</div><div class="line">    &#125;, 0);</div><div class="line">  &#125;</div><div class="line">  render() &#123;</div><div class="line">    return (</div><div class="line">        &lt;div&gt;&#123;this.state.val&#125;&lt;/div&gt;</div><div class="line">    );</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>说起setState的异步，很多人都会说，setState以后react并没有立即更新state，而是处于pending状态，然后会将多次state的更新合并为一次来提高效率。那么，什么时候会处于pending状态，什么时候会跳出pending状态来合并进行state更新，总不至于是通过定时吧，那是怎么实现的呢？</p>
+<p>现在看代码，首先从结果可以看出来前两次setState中state的更新是合并为一次的，合并更新以后<code>val=1</code>。而后两次setState是没有合并的，即不是异步而是同步的。<br>未完待续</p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/09/08/react源码-setState是异步的，when？/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-react源码-一些概念" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
